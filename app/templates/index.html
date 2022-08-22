@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Please help our animals</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/custom.css')}}">
+        <link rel="icon" href="{{ url_for('static', filename='doge.png') }}">
+    </head>
+
+    <body>
+
+    <nav class="topnav">
+    <button class="active" href="localhost/">Home</button>
+    {% if current_user.is_authenticated == False %}
+    <div style="position: absolute; right: 5px;">
+        <button data-bs-toggle="modal" data-bs-target="#login-modal" data-source="User Login">Login</button>
+        <div class="modal fade" id="login-modal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="Label">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+    
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="user-form-id">UID</span>
+                        <input type="text" class="form-control-0" aria-label="ptype" aria-describedby="basic-addon1">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="user-form-pwd">Password</span>
+                        <input type="password" class="form-control-1" aria-label="ptype" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button href="localhost/" id="user-login" type="button" class="btn btn-primary">Login</button>
+                </div>
+                </div>
+            </div>
+            </div>
+
+        <button data-bs-toggle="modal" data-bs-target="#signup-modal" data-source="User Sign Up">Sign Up</button>
+        <div class="modal fade" id="signup-modal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="Label">Sign Up</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+    
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="user-form-id">UID</span>
+                        <input type="text" class="form-control-0" aria-label="ptype" aria-describedby="basic-addon1">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="user-form-pwd">Password</span>
+                        <input type="password" class="form-control-1" aria-label="ptype" aria-describedby="basic-addon1">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="user-form-pwd-2">Password</span>
+                        <input type="password" class="form-control-2" aria-label="ptype" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button href="localhost/" id="user-signup" type="button" class="btn btn-primary">Sign Up</button>
+                </div>
+                </div>
+            </div>
+            </div>
+    </div>
+    {% endif %}
+    {% if current_user.is_authenticated %}
+    <div style="position: absolute; right: 5px;">
+        <button href="localhost/match" id="user-favor">My Favor</button>
+        <button href="localhost/" id="user-logout">Log Out</button>
+    </div>
+    {% endif %}
+    </nav>
+
+    <main role="main" class="container extra-bottom">
+        <h1 class="mt-5">Animal Adoption App</h1>
+        <p><mark>Adopt it now.</mark></p>
+        {% if current_user.is_authenticated %}
+            Hi, User: {{ current_user.UID }}!
+        {% endif %}
+        {% if current_user.is_authenticated == False %}
+            You haven't log in.
+        {% endif %}
+    </main>
+
+
+    <div class="container" style="padding-bottom: 10px;">    
+        
+        <!-- Button trigger modal -->
+        <div style="text-align: left;">
+        <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#pet-search-modal" data-source="Search Pet">Search Animal</button>
+        </div>
+        <div class="modal fade" id="pet-search-modal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="Label">Search Animals</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="pet-form-display">Color</span>
+                    <input type="text" class="form-control" aria-label="ptype" aria-describedby="basic-addon1">
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button href="localhost/search" id="search-pet" type="button" class="btn btn-primary">Search</button>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="container" style="padding-bottom: 10px;">    
+        
+        <!-- Button trigger modal -->
+        <div style="text-align: left;">
+        <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#pet-match-modal" data-source="Match Pet">Match Animal</button>
+        </div>
+        <div class="modal fade" id="pet-match-modal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="Label">Match Animals</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="pet-form-display">UID</span>
+                    <input type="text" class="form-control" aria-label="ptype" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="pet-form-fav">Sync Favors (0=No 1=Yes)</span>
+                    <input type="text" class="form-control1" value="0" aria-label="ptype" aria-describedby="basic-addon1">
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button href="localhost/match" id="match-pet" type="button" class="btn btn-primary">Match</button>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="container">  
+
+        <div style="text-align: right;"></div>
+        <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#pet-modal" data-source="New Pet">Add Animal</button>
+        </div>
+        <div class="modal fade" id="pet-modal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="Label">Add a Animal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="pet-form-display">Pet ID</span>
+                    <input type="text" class="form-control-0" placeholder="Blank for Preference" aria-label="pet_id" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="pet-form-type">Pet Type</span>
+                    <input type="text" class="form-control-1" aria-label="pet_type" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="pet-form-color">Pet Color</span>
+                    <input type="text" class="form-control-2" aria-label="color" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="pet-form-cond">Condition</span>
+                    <input type="text" class="form-control-3" placeholder="Blank for Preference" aria-label="cond" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="pet-form-uid">UID</span>
+                    <input type="text" class="form-control-4" aria-label="uid" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="pet-form-loc">Location</span>
+                    <input type="text" class="form-control-5" placeholder="Blank for Preference" aria-label="loc" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="submit-pet" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+            </div>
+        </div>
+        </div>
+
+    </div>
+
+    <!--Todo Table-->
+    <div class="container table-responsive">
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="pet_id">Pet ID</th>
+            <th class="pet_type">Pet Type</th>
+            <th class="color">Color</th>
+            <th class="location">Location</th>
+            <th class="pet_condition">Condition</th>
+            <th class="delete">Delete</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for item in items %}
+            <tr>
+                <td>{{item.pet_id}}</td>
+                <td>{{item.pet_type}}</td>
+                <td>{{item.color}}</td>
+                <td>{{item.location}}</td>
+                {% if item.pet_condition == "Normal" %}
+                <td><button type="button" class="btn btn-outline-warning btn-sm state"
+                            data-source="{{item.pet_id}}">{{item.pet_condition}}</button></td>
+                {%endif%}
+                {% if item.pet_condition == "Sick" %}
+                <td><button id="remove" type="button" class="btn btn-outline-secondary btn-sm state"
+                        data-source="{{item.pet_id}}">{{item.pet_condition}}</button></td>
+                {%endif%}
+
+
+                <td><button class="btn btn-outline-secondary btn-sm remove" data-source="{{item.pet_id}}"type="button"><i class="fa fa-trash fa-1" aria-hidden="true">
+                </i></button></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+            
+    </table>
+    </div>
+
+    <main role="main" class="container extra-bottom">
+        <h1 class="mt-5">Stastic: Top Healthy Pets in Austin</h1>
+    </main>
+
+<!--
+    <div class="container table-responsive">
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="pet_type">Pet Type</th>
+            <th class="color">Color</th>
+            <th class="num">Number</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for item in items1 %}
+            <tr>
+                <td>{{item.pet_type}}</td>
+                <td>{{item.color}}</td>
+                <td>{{item.number}}</td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+            
+    </table>
+    </div>
+
+//-->
+
+    <div class="msg_desc">
+        <img class="totoro" src="{{ url_for('static', filename=temp) }}" alt="">
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+<p class="text-muted"><small>App developed for CS411 UIUC by @yichen14 @yiqiliu2 reference: @tcheng10</small>
+</p>
+</div>
+</footer>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bund
+le.min.js"
+integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0
+" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='scripts/v2.js') }}"></script>
+
+</html>
